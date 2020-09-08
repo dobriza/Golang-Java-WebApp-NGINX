@@ -1,8 +1,8 @@
 This project creates a minimal Debian droplet at Digital Ocean public cloud with two very basic web applications.
-First application has been written on Golang and listen tcp/8010 port.
-Second application has been written on Java (particullary at Java Spring Boot), and listen tcp/8082 port.
+First application has been written on Golang and listen     tcp/8010 port.
+Second application has been written on Java (particullary at Java Spring Boot), and listen     tcp/8082 port.
 
-NGINX route requests for /, /go, and /java, respectively onto localhost:80, localhost:8010, localhost:8082. 
+NGINX route requests for     /,     /go, and     /java, respectively onto     localhost:80,     localhost:8010,     localhost:8082. 
 
 Here is a route request topology:
 
