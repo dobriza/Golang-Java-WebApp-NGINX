@@ -1,0 +1,6 @@
+sites_config_template_directory: ../templates
+nginx_config_file: ../files/nginx.conf
+javaDirectory: ../files/javaWebApp
+golangDirectory: ../files/golangWebApp
+nginxPortNumber: 80
+email: dobriza@yandex.ru

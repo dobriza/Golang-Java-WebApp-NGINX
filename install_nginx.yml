@@ -1,0 +1,6 @@
+---
+- hosts: nginx
+  gather_facts: no
+  become: yes
+  roles:
+  - nginx

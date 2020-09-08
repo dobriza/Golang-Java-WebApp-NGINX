@@ -1,0 +1,4 @@
+---
+ - import_tasks: install.yml
+ - import_tasks: deploy-golangWebApp.yml
+ - import_tasks: deploy-javaWebApp.yml

@@ -1,0 +1,9 @@
+/.terraform
+dev02
+terraform.tfvars
+/.idea
+/.mvn
+terraform.tfstate
+terraform.tfstate.backup
+nginx/files/javaWebApp/.idea/
+nginx/files/javaWebApp/.mvn/

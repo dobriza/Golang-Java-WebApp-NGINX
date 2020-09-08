@@ -1,0 +1,56 @@
+---
+   - name: Gather facts
+     setup:
+   - name: Make golang directory
+     file:
+       path: /usr/lib/golang
+       state: directory
+   - name: Download golang
+     get_url:
+       url: https://dl.google.com/go/go1.15.linux-amd64.tar.gz
+       dest: /etc/go1.15.linux-amd64.tar.gz
+       validate_certs: no
+   - name: unpack tarball
+     unarchive:
+       src: /etc/go1.15.linux-amd64.tar.gz
+       dest: /usr/lib/golang
+       remote_src: yes
+   - name: set enviroment variables
+     lineinfile: dest=~/.profile line='export PATH=$PATH:/usr/lib/golang/go/bin:$GOPATH/bin' insertafter='EOF' state=present
+   - name: refresh source file
+     shell: 
+        chdir: /root
+        cmd: source /root/.profile
+        executable: /bin/bash
+   - name: copy go files to target host
+     copy:
+        src: "{{ golangDirectory }}/golangWebApp"
+        dest: /bin/golangWebApp
+        owner: root
+        group: root
+        mode: '0777'
+   - name:   create golang web app service
+     blockinfile:
+       create: yes
+       insertafter: EOF
+       path: /etc/systemd/system/golangWebApp.service
+       block: |
+         [Unit]
+         Description=Golang Web App
+
+         [Service]
+         WorkingDirectory=/bin
+         ExecStart=/bin/golangWebApp
+         User=root
+         Type=simple
+         Restart=on-failure
+         RestartSec=10
+
+         [Install]
+         WantedBy=multi-user.target
+   - name: run a systemctl daemon
+     systemd:
+       daemon_reload: yes
+       name: golangWebApp.service
+       state: started
+

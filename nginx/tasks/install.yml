@@ -1,0 +1,46 @@
+---
+    - name: install nginx latest version 
+      apt: 
+        name: nginx
+        state: latest
+    - name: delete default site 
+      file:      
+        path: /etc/nginx/sites-available/default
+        state: absent
+      become: yes
+
+
+    - name: copy nginx.conf with logging customization
+      copy: 
+        src: "{{ nginx_config_file }}"
+        dest: /etc/nginx/
+        owner: root
+        group: root
+        mode: 0744
+        force: yes
+
+    - name: delete default site symlinc
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      become: yes
+    - name: start nginx 
+      service:
+        name: nginx
+        state: started
+      become: yes
+    - name: copy nginx config file for the first web site
+      template:
+        src: "{{ sites_config_template_directory }}/site1.cfg.j2"
+        dest: /etc/nginx/sites-available/site1.cfg
+      become: yes
+    - name: create symlinc
+      file:
+        src: /etc/nginx/sites-available/site1.cfg
+        dest: /etc/nginx/sites-enabled/site1.cfg
+        owner: root
+        group: root
+        state: link
+      become: yes
+      notify: restart nginx
+
