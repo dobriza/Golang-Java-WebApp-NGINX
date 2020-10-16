@@ -15,5 +15,3 @@ Here is a route request topology:
 
 NGINX web proxy redirect HTTP request to these two apps, using proxy_pass directive. 
 
-
-You can use dev02.pub ssh key for accessing Debian droplet.
